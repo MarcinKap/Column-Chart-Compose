@@ -59,3 +59,17 @@ The use of this list is as follows:
 
 	Chart(listStats = listStats)
 
+Additional information contained in the ChartColumn (for example, a String with the name of the month and the chart number) can be used to send information about clicking on a given column.
+You should then overwrite the 'select' field for example as below. For example:
+
+    select = {
+		val builder = AlertDialog.Builder(this@MainActivity)
+		builder.setMessage(it as String)
+		builder.show()
+    }
+
+The result will be the added function of clicking on the graph.
+
+https://user-images.githubusercontent.com/53196103/161311712-6b95a1ab-910a-4d67-9d9c-1353111640dd.mov
+
+
