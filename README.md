@@ -16,7 +16,7 @@ Add the code below to your gradle files
     }
 
     dependencies {
-		implementation 'com.github.MarcinKap:Column-Chart-Compose:1.0'
+		implementation 'com.github.MarcinKap:Column-Chart-Compose:1.0.1'
 	}
 
 # Examples of use
