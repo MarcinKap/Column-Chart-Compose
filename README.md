@@ -60,7 +60,7 @@ The use of this list is as follows:
 	Chart(listStats = listStats)
 
 Additional information contained in the ChartColumn (for example, a String with the name of the month and the chart number) can be used to send information about clicking on a given column.
-You should then overwrite the 'select' field for example as below. For example:
+You should then overwrite the 'select' field. For example:
 
     select = {
 		val builder = AlertDialog.Builder(this@MainActivity)
