@@ -28,8 +28,10 @@ fun Chart(
     modifier: Modifier = Modifier,
     listStats: List<ChartSinglePart>,
     select: (Any?) -> Unit = {},
-    horizontalLineColor: Color = Color.Black,
+    horizontalLineColor: Color = Color.Gray,
+    axisLinesColor: Color = Color.Black,
     showHorizontalLines: Boolean = true,
+    showVerticalAxisLine: Boolean = true,
     maxScaleValue: Int? = null,
     leftScaleValues: List<String>? = null,
     leftScaleTextStyle: TextStyle = MaterialTheme.typography.overline,
@@ -117,14 +119,16 @@ fun Chart(
                         contentAlignment = Alignment.Center
                     ) {
                         if (listStats.isNotEmpty()) {
-                            ProgramGraph(
+                            CanvasChartWithButtons(
                                 modifier = Modifier
                                     .fillMaxHeight(fraction = (numberOfHorizontalLines - 1) / numberOfHorizontalLines.toFloat()),
                                 listStats = listStats,
                                 select = select,
                                 horizontalLineColor = horizontalLineColor,
+                                axisLinesColor = axisLinesColor,
                                 numberOfHorizontalLines = numberOfHorizontalLines,
                                 showHorizontalLines = showHorizontalLines,
+                                showVerticalAxisLine = showVerticalAxisLine,
                                 isRoundedCorner = isRoundedCorner,
                                 maxValueOnChart = maxValueOnChart
                             )
@@ -209,13 +213,15 @@ fun DefaultLeftScale(
 
 
 @Composable
-fun ProgramGraph(
+fun CanvasChartWithButtons(
     modifier: Modifier,
     listStats: List<ChartSinglePart>,
     select: (Any?) -> Unit,
     horizontalLineColor: Color,
+    axisLinesColor: Color,
     numberOfHorizontalLines: Int,
     showHorizontalLines: Boolean,
+    showVerticalAxisLine: Boolean,
     isRoundedCorner: Boolean,
     maxValueOnChart: Int
 ) {
@@ -226,9 +232,11 @@ fun ProgramGraph(
         UniversalChartCanvas(
             listStats = listStats,
             horizontalLineColor = horizontalLineColor,
+            axisLinesColor = axisLinesColor,
             numberOfHorizontalLines = numberOfHorizontalLines,
             showHorizontalLines = showHorizontalLines,
             isRoundedCorner = isRoundedCorner,
+            showVerticalAxisLine = showVerticalAxisLine,
             maxScaleValue = maxValueOnChart
         )
         Row {
@@ -253,9 +261,11 @@ fun ProgramGraph(
 fun UniversalChartCanvas(
     listStats: List<ChartSinglePart>,
     horizontalLineColor: Color,
+    axisLinesColor: Color,
     maxScaleValue: Int,
     numberOfHorizontalLines: Int,
     showHorizontalLines: Boolean,
+    showVerticalAxisLine: Boolean,
     isRoundedCorner: Boolean,
 ) {
     Surface {
@@ -267,6 +277,16 @@ fun UniversalChartCanvas(
             val mainHorizontalLineOffsetY = canvasHeight / (numberOfHorizontalLines - 1)
             var horizontalLineOffsetY: Float
 
+            if (showVerticalAxisLine){
+                drawRect(
+                    color = axisLinesColor,
+                    topLeft = Offset(x = 0f, y = 0f),
+                    size = Size(
+                        width = 2f,
+                        height = canvasHeight
+                    ),
+                )
+            }
 
             if (showHorizontalLines) {
                 for (i in 0..numberOfHorizontalLines - 1) {
@@ -276,7 +296,7 @@ fun UniversalChartCanvas(
                         mainHorizontalLineOffsetY * i
                     }
                     drawRect(
-                        color = horizontalLineColor,
+                        color = if (i == numberOfHorizontalLines - 1) axisLinesColor else horizontalLineColor,
                         topLeft = Offset(x = 0f, y = horizontalLineOffsetY),
                         size = Size(
                             width = canvasWidth,
