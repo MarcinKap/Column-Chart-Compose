@@ -37,8 +37,25 @@ Each 'ChartColumn' object accepts values of int, color and 'informationToSend' o
 
 	data class ChartColumn(val value: Int, val color: Color, val informationToSend: Any?)
 
+For example, the created list could look like this:
 
+    val listStats = listOf(
+		ChartSinglePart(
+		    columns = listOf(
+			ChartColumn(
+			    value = 10,
+			    color = Color(0xff15a8a6),
+			),
+			ChartColumn(
+			    value = 151,
+			    color = Color(0xffefaf23),
+			)
+		    ),
+		    description = "MON"
+		)
+    )
 
+The use of this list is as follows:
 
-
+	Chart(listStats = listStats)
 
