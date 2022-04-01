@@ -4,10 +4,9 @@
 Compose Column Chart is an open source library for creating views of column charts in compose.  
 
 
-Download\
-<br/>
+#Download
 
-For detailed instructions and requirements, see Glide's download and setup docs page.
+
 
 
     repositories {
@@ -16,3 +15,9 @@ For detailed instructions and requirements, see Glide's download and setup docs 
         maven { url 'https://jitpack.io' }
        ...
     }
+
+
+
+    dependencies {
+	        implementation 'com.github.MarcinKap:Column-Chart-Compose:1.0'
+	}
