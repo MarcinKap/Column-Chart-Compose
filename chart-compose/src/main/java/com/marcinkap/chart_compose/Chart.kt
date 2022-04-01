@@ -275,7 +275,7 @@ fun UniversalChartCanvas(
 
             //Horizontal Lines
             val mainHorizontalLineOffsetY = canvasHeight / (numberOfHorizontalLines - 1)
-            var horizontalLineOffsetY: Float
+
 
             if (showVerticalAxisLine){
                 drawRect(
@@ -290,13 +290,9 @@ fun UniversalChartCanvas(
 
             if (showHorizontalLines) {
                 for (i in 0..numberOfHorizontalLines - 1) {
-                    horizontalLineOffsetY = if (i == numberOfHorizontalLines - 1) {
-                        mainHorizontalLineOffsetY * i - 2
-                    } else {
-                        mainHorizontalLineOffsetY * i
-                    }
+                    val horizontalLineOffsetY = mainHorizontalLineOffsetY * i
                     drawRect(
-                        color = if (i == numberOfHorizontalLines - 1) axisLinesColor else horizontalLineColor,
+                        color = horizontalLineColor,
                         topLeft = Offset(x = 0f, y = horizontalLineOffsetY),
                         size = Size(
                             width = canvasWidth,
@@ -320,7 +316,6 @@ fun UniversalChartCanvas(
             var numberOfPart = 0
 
             listStats.forEach {
-
                 val numberOfColumns = it.columns.size
                 val columnWidth: Float
                 if (numberOfColumns == 1) {
@@ -334,7 +329,6 @@ fun UniversalChartCanvas(
                 val spaceBetweenColumn =
                     (eachDayWidth - numberOfColumns * columnWidth) / (numberOfColumns + 1)
                 val dayOffsetX = numberOfPart * eachDayWidth
-
 
                 for (i in it.columns.indices) {
                     val offsetX = ((i + 1) * spaceBetweenColumn) + dayOffsetX + i * columnWidth
@@ -368,6 +362,18 @@ fun UniversalChartCanvas(
                 }
                 numberOfPart++
             }
+
+            val horizontalLineOffsetY = mainHorizontalLineOffsetY * (numberOfHorizontalLines - 1) - 2
+            drawRect(
+                color = horizontalLineColor,
+                topLeft = Offset(x = 0f, y = horizontalLineOffsetY),
+                size = Size(
+                    width = canvasWidth,
+                    height = 2f
+                ),
+            )
+
+
 
         }
     }
