@@ -5,11 +5,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -27,6 +24,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
 
+
             val color1 = Color(0xff15a8a6)
             val color2 = Color(0xffefaf23)
             val color3 = Color(0xff0082d5)
@@ -34,10 +32,12 @@ class MainActivity : ComponentActivity() {
             val color5 = Color(0xff2c3a8c)
 
 
-            AndroidLibraryTheme {
+//            AndroidLibraryTheme {
+            MaterialTheme {
                 // A surface container using the 'background' color from the theme
                 Surface() {
-
+                    var showAlertDialog by remember { mutableStateOf(false) }
+                    var alertDialogMessage by remember { mutableStateOf("") }
 
                     LazyColumn() {
 
@@ -188,80 +188,80 @@ class MainActivity : ComponentActivity() {
                                         ChartColumn(
                                             value = 10,
                                             color = color3,
-                                            informationToSend = 1,
+                                            informationToSend = "January 1",
                                         ),
                                         ChartColumn(
                                             value = 51,
                                             color = color4,
-                                            informationToSend = 1,
+                                            informationToSend = "January 2",
                                         ),
                                         ChartColumn(
                                             value = 130,
                                             color = color5,
-                                            informationToSend = 1,
+                                            informationToSend = "January 3",
                                         )
                                     ),
-                                    description = "JAN"
+                                    description = "JANUARY"
                                 ),
                                 ChartSinglePart(
                                     columns = listOf(
                                         ChartColumn(
                                             value = 99,
                                             color = color3,
-                                            informationToSend = 1,
+                                            informationToSend = "February 1",
                                         ),
                                         ChartColumn(
                                             value = 56,
                                             color = color4,
-                                            informationToSend = 1,
+                                            informationToSend = "February 2",
                                         ),
                                         ChartColumn(
                                             value = 42,
                                             color = color5,
-                                            informationToSend = 1,
+                                            informationToSend = "February 3",
                                         )
                                     ),
-                                    description = "FEB"
+                                    description = "FEBRUARY"
                                 ),
                                 ChartSinglePart(
                                     columns = listOf(
                                         ChartColumn(
                                             value = 81,
                                             color = color3,
-                                            informationToSend = 1,
+                                            informationToSend = "March 1",
                                         ),
                                         ChartColumn(
                                             value = 67,
                                             color = color4,
-                                            informationToSend = 1,
+                                            informationToSend = "March 2",
                                         ),
                                         ChartColumn(
                                             value = 101,
                                             color = color5,
-                                            informationToSend = 1,
+                                            informationToSend = "March 3",
                                         )
                                     ),
-                                    description = "MAR"
+                                    description = "MARCH"
                                 ),
                                 ChartSinglePart(
                                     columns = listOf(
                                         ChartColumn(
                                             value = 13,
                                             color = color3,
-                                            informationToSend = 1,
+                                            informationToSend = "April 1",
                                         ),
                                         ChartColumn(
                                             value = 61,
                                             color = color4,
-                                            informationToSend = 1,
+                                            informationToSend = "April 2",
                                         ),
                                         ChartColumn(
                                             value = 150,
                                             color = color5,
-                                            informationToSend = 1,
+                                            informationToSend = "April 3",
                                         )
                                     ),
-                                    description = "MAR"
+                                    description = "APRIL"
                                 )
                             )
                             Box(
@@ -288,22 +288,57 @@ class MainActivity : ComponentActivity() {
                                         Chart(
                                             listStats = listStats,
                                             maxScaleValue = 160,
-                                            leftScaleValues = listOf("200","180","160", "120", "80", "40", "0"),
+                                            leftScaleValues = listOf(
+                                                "200",
+                                                "180",
+                                                "160",
+                                                "120",
+                                                "80",
+                                                "40",
+                                                "0"
+                                            ),
                                             isRoundedCorner = false,
                                             showHorizontalLines = false,
-                                            showVerticalAxisLine = false
+                                            showVerticalAxisLine = false,
+                                            select = {
+                                                showAlertDialog = true
+                                                alertDialogMessage = it.toString()
+                                            }
                                         )
                                     }
+                                    if (showAlertDialog) {
+                                        AlertDialog(
+                                            onDismissRequest = {
+                                                // Dismiss the dialog when the user clicks outside the dialog or on the back
+                                                // button. If you want to disable that functionality, simply use an empty
+                                                // onCloseRequest.
+                                                showAlertDialog = false
+                                            },
+                                            title = {
+                                                Text(text = alertDialogMessage)
+                                            },
+                                            confirmButton = {
+                                                Button(
+                                                    onClick = { showAlertDialog = false }
+                                                ) {
+                                                    Text("Ok")
+                                                }
+                                            }
+                                        )
+                                    }
+
                                 }
                             }
                         }
-
-
                     }
+
+
                 }
             }
         }
     }
+
+
 }
 
 

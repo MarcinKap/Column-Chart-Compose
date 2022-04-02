@@ -6,5 +6,5 @@ import androidx.compose.ui.graphics.Color
 data class ChartColumn(
     val value: Int,
     val color: Color,
-    val informationToSend: Any?,
+    val informationToSend: Any? = null,
 )

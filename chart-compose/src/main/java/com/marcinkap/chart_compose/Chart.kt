@@ -17,9 +17,11 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import com.marcinkap.chart_compose.models.ChartColumn
 import com.marcinkap.chart_compose.models.ChartSinglePart
 import kotlin.math.roundToInt
 
@@ -287,7 +289,6 @@ fun UniversalChartCanvas(
                     ),
                 )
             }
-
             if (showHorizontalLines) {
                 for (i in 0..numberOfHorizontalLines - 1) {
                     val horizontalLineOffsetY = mainHorizontalLineOffsetY * i
@@ -301,7 +302,6 @@ fun UniversalChartCanvas(
                     )
                 }
             }
-
             //Vertical columns
             val eachDayWidth = canvasWidth / (listStats.size)
             val eachColumnHeight: Float
@@ -311,10 +311,8 @@ fun UniversalChartCanvas(
             } else {
                 eachColumnHeight = canvasHeight
             }
-
             //calculate spaceBetweenColumn
             var numberOfPart = 0
-
             listStats.forEach {
                 val numberOfColumns = it.columns.size
                 val columnWidth: Float
@@ -362,7 +360,6 @@ fun UniversalChartCanvas(
                 }
                 numberOfPart++
             }
-
             val horizontalLineOffsetY = mainHorizontalLineOffsetY * (numberOfHorizontalLines - 1) - 2
             drawRect(
                 color = horizontalLineColor,
@@ -372,16 +369,13 @@ fun UniversalChartCanvas(
                     height = 2f
                 ),
             )
-
-
-
         }
     }
 }
 
 @Composable
 fun ColumnDescription(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     listStats: List<ChartSinglePart>,
     textStyle: TextStyle = MaterialTheme.typography.overline
 ) {
@@ -402,40 +396,34 @@ fun ColumnDescription(
 }
 
 
+@Preview(showBackground = true)
 @Composable
-fun ScalesUnits(
-    leftScaleUnit: String?,
-    rightScaleUnit: String?,
-    textStyle: TextStyle = MaterialTheme.typography.caption,
-) {
-    Row(
-        Modifier
-            .fillMaxWidth()
-            .wrapContentHeight(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        if (leftScaleUnit != null) {
-            Text(
-                text = leftScaleUnit,
-                style = textStyle
-            )
-        } else {
-            Spacer(modifier = Modifier)
-        }
-        if (rightScaleUnit != null) {
-            Text(
-                text = rightScaleUnit,
-                style = textStyle
-            )
-        } else {
-            Spacer(modifier = Modifier)
-        }
+fun ColumnDescriptionPreview(){
+    val listStats = listOf(
+        ChartSinglePart(
+            columns = listOf(
+                ChartColumn(
+                    value = 10,
+                    color = Color(0xff15a8a6),
+                    informationToSend = 1,
+                ),
+                ChartColumn(
+                    value = 151,
+                    color = Color(0xffefaf23),
+                    informationToSend = 1,
+                )
+            ),
+
+            description = "MON"
+        )
+    )
+    MaterialTheme{
+        ColumnDescription(
+            listStats = listStats)
     }
 }
 
 
-@Composable
 fun calculateMaxScaleValue(listStats: List<ChartSinglePart>): Int {
     var maxScaleValue = 10
     var maxValueInList = 0
