@@ -137,8 +137,6 @@ fun Chart(
                         }
                     }
 
-
-
                     if (!rightScaleValues.isNullOrEmpty()) {
                         CustomScale(
                             modifier = rightScaleModifier,
@@ -168,6 +166,17 @@ fun Chart(
     }
 }
 
+@Preview(showBackground = true)
+@Composable
+fun ChartPreview(){
+    MaterialTheme() {
+        Chart(listStats = fakeListStats())
+    }
+}
+
+
+
+
 @Composable
 fun CustomScale(
     modifier: Modifier,
@@ -188,6 +197,14 @@ fun CustomScale(
                 color = textColor,
             )
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun CustomScalePreview(){
+    MaterialTheme{
+        CustomScale(modifier = Modifier.height(300.dp), listValues = listOf("0", "10", "20", "30", "40"))
     }
 }
 
@@ -213,6 +230,15 @@ fun DefaultLeftScale(
     }
 }
 
+@Preview
+@Composable
+fun DefaultLeftScalePreview(){
+    val maxValue = calculateMaxScaleValue(fakeListStats())
+
+    MaterialTheme() {
+        DefaultLeftScale(modifier = Modifier.height(300.dp).width(50.dp), maxValue = maxValue, numberOfHorizontalLines = 6)
+    }
+}
 
 @Composable
 fun CanvasChartWithButtons(
@@ -373,6 +399,25 @@ fun UniversalChartCanvas(
     }
 }
 
+@Preview(showBackground = true)
+@Composable
+fun UniversalChartCanvasPreview(){
+    MaterialTheme{
+        UniversalChartCanvas(
+            listStats = fakeListStats(),
+            horizontalLineColor = Color.Gray,
+            axisLinesColor = Color.Black,
+            maxScaleValue = 160,
+            numberOfHorizontalLines = 6,
+            showHorizontalLines = true,
+            showVerticalAxisLine = true,
+            isRoundedCorner = false
+        )
+    }
+}
+
+
+
 @Composable
 fun ColumnDescription(
     modifier: Modifier = Modifier,
@@ -446,4 +491,97 @@ fun calculateMaxScaleValue(listStats: List<ChartSinglePart>): Int {
         }
     }
     return maxScaleValue
+}
+
+
+
+fun fakeListStats(): List<ChartSinglePart>{
+    val color3 = Color(0xff0082d5)
+    val color4 = Color(0xffe4335d)
+    val color5 = Color(0xff2c3a8c)
+
+    val listStats = listOf(
+        ChartSinglePart(
+            columns = listOf(
+                ChartColumn(
+                    value = 10,
+                    color = color3,
+                    informationToSend = "January 1",
+                ),
+                ChartColumn(
+                    value = 51,
+                    color = color4,
+                    informationToSend = "January 2",
+                ),
+                ChartColumn(
+                    value = 130,
+                    color = color5,
+                    informationToSend = "January 3",
+                )
+            ),
+            description = "JANUARY"
+        ),
+        ChartSinglePart(
+            columns = listOf(
+                ChartColumn(
+                    value = 99,
+                    color = color3,
+                    informationToSend = "February 1",
+                ),
+                ChartColumn(
+                    value = 56,
+                    color = color4,
+                    informationToSend = "February 2",
+                ),
+                ChartColumn(
+                    value = 42,
+                    color = color5,
+                    informationToSend = "February 3",
+                )
+            ),
+            description = "FEBRUARY"
+        ),
+        ChartSinglePart(
+            columns = listOf(
+                ChartColumn(
+                    value = 81,
+                    color = color3,
+                    informationToSend = "March 1",
+                ),
+                ChartColumn(
+                    value = 67,
+                    color = color4,
+                    informationToSend = "March 2",
+                ),
+                ChartColumn(
+                    value = 101,
+                    color = color5,
+                    informationToSend = "March 3",
+                )
+            ),
+            description = "MARCH"
+        ),
+        ChartSinglePart(
+            columns = listOf(
+                ChartColumn(
+                    value = 13,
+                    color = color3,
+                    informationToSend = "April 1",
+                ),
+                ChartColumn(
+                    value = 61,
+                    color = color4,
+                    informationToSend = "April 2",
+                ),
+                ChartColumn(
+                    value = 150,
+                    color = color5,
+                    informationToSend = "April 3",
+                )
+            ),
+            description = "APRIL"
+        )
+    )
+
+    return listStats
 }
